@@ -1,5 +1,5 @@
 Sub mysub()
-    Dim m As Integer, n As Integer, rank As Integer, col_max As Double, i_max As Integer, Row As Integer, temp As Double
+    Dim m As Integer, n As Integer, rank As Integer, col_max As Double, i_max As Integer, Row As Integer, temp As Integer
     rank = 0
     m = 0
     n = 0
@@ -64,15 +64,36 @@ Sub mysub()
         temp = 0
 
         For col = 1 To n
-            temp = temp + A(Row, col)
+            If A(Row, col) <> 0 Then
+                temp = 1
+            End If
+            If col < Row Then
+                Cells(Row + m + 1, col).Interior.Color = RGB(189, 215, 238)
+                If col = Row - 1 Then
+                    Cells(Row + m + 1, col).Borders(xlEdgeTop).Weight = xlMedium
+                    Cells(Row + m + 1, col).Borders(xlEdgeRight).Weight = xlMedium
+                End If
+            End If
             Cells(Row + m + 1, col).Value = A(Row, col)
         Next col
 
-        If temp <> 0 Then
-            rank = rank + 1
-        End If
+        rank = rank + temp
     Next Row
+    
+    For Row = 1 To m
+        Cells(Row, n).Borders(xlEdgeRight).Weight = xlThick
+        Cells(Row + m + 1, n).Borders(xlEdgeRight).Weight = xlThick
+    Next Row
+    
+    For col = 1 To n
+        Cells(m, col).Borders(xlEdgeBottom).Weight = xlThick
+        Cells(m + 1, col).Borders(xlEdgeBottom).Weight = xlThick
+        Cells(2 * m + 1, col).Borders(xlEdgeBottom).Weight = xlThick
+    Next col
 
     Cells(2 * m + 3, 1).Value = rank
-
+    Cells(2 * m + 3, 1).Interior.Color = RGB(228, 255, 88)
+    Cells(2 * m + 3, 1).Borders(xlEdgeBottom).Weight = xlThick
+    Cells(2 * m + 3, 1).Borders(xlEdgeRight).Weight = xlThick
+    Cells(2 * m + 3, 1).Borders(xlEdgeTop).Weight = xlThick
 End Sub
