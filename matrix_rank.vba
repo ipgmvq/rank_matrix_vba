@@ -1,8 +1,9 @@
 Sub mysub()
-    Dim m As Integer, n As Integer, rank As Integer, col_max As Double, i_max As Integer, Row As Integer, temp As Integer
+Dim m As Integer, n As Integer, rank As Integer, col_max As Double, i_max As Integer, Row As Integer, temp As Integer, prev_non_zero As Integer
     rank = 0
     m = 0
     n = 0
+    prev_non_zero = 1001
     Dim A(1000, 1000) As Double
 
     For col = 1 To 1000
@@ -64,20 +65,29 @@ Sub mysub()
         temp = 0
 
         For col = 1 To n
+        
             If A(Row, col) <> 0 Then
-                temp = 1
+                If temp = 0 Then prev_non_zero = col
+                temp = temp + 1
+            ElseIf temp <> 0 Then
+                temp = temp + 1
             End If
-            If col < Row Then
+            
+            If temp = 0 Then
                 Cells(Row + m + 1, col).Interior.Color = RGB(189, 215, 238)
-                If col = Row - 1 Then
-                    Cells(Row + m + 1, col).Borders(xlEdgeTop).Weight = xlMedium
-                    Cells(Row + m + 1, col).Borders(xlEdgeRight).Weight = xlMedium
-                End If
+                If col >= prev_non_zero Then Cells(Row + m + 1, col).Borders(xlEdgeTop).Weight = xlMedium
             End If
+            
+            If temp = 1 And col > 1 Then Cells(Row + m + 1, col - 1).Borders(xlEdgeRight).Weight = xlMedium
+            
             Cells(Row + m + 1, col).Value = A(Row, col)
         Next col
-
-        rank = rank + temp
+        
+        If temp > 0 Then
+            rank = rank + 1
+        Else
+            prev_non_zero = 1001
+        End If
     Next Row
     
     For Row = 1 To m
