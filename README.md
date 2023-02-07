@@ -1,2 +1,2 @@
-# rank_matrix_vba
-Calculates the rank of matrix in VBA
+# VBA Code to calculate the rank of a matrix
+This VBA code transforms a matrix into the row echelon form and calculates its rank
