@@ -34,7 +34,7 @@ Sub mysub()
 
         For i = Row To m
             If Abs(A(i, col)) > col_max Then
-                col_max = A(i, col)
+                col_max = Abs(A(i, col))
                 i_max = i
             End If
         Next i
