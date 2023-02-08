@@ -90,7 +90,7 @@ Sub mysub()
         If temp > 0 Then
             rank = rank + 1
         Else
-            prev_non_zero = 1001
+            prev_non_zero = Rows.Count + 1
         End If
     Next Row
     
